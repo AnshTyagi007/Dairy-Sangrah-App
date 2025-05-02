@@ -1,0 +1,2 @@
+C:/Users/Ansh/Documents/programming/Flutter/farm_expense_mangement_app/android/app/.cxx/RelWithDebInfo/4d46t1s6/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Ansh/Documents/programming/Flutter/farm_expense_mangement_app/android/app/.cxx/RelWithDebInfo/4d46t1s6/x86_64/CMakeFiles/rebuild_cache.dir
