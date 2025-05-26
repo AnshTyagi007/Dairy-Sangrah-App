@@ -31,7 +31,7 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Text(
+          icon: const Text(
             '<', // Custom back button symbol
             style: TextStyle(
               fontSize: 24,
@@ -45,7 +45,7 @@ class SignUpPage extends StatelessWidget {
         ),
         title: Text(
           currentLocalization['Sign Up']??"", // Centered title
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold, // Make title bold
           ),
         ),
@@ -60,18 +60,18 @@ class SignUpPage extends StatelessWidget {
               // "Enter Your Phone Number" text (bold but not all caps)
               Text(
                 currentLocalization['Enter Your Phone Number']??"",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
 
-              SizedBox(height: 10), // Space between the text and the image
+              const SizedBox(height: 10), // Space between the text and the image
 
               // Image at the top
               Image.asset('asset/phone.jpeg'), // Replace with your image asset path
 
-              SizedBox(height: 20), // Space between the image and the next text
+              const SizedBox(height: 20), // Space between the image and the next text
 
               // Phone number input field with white background and shadow
               Container(
@@ -82,7 +82,7 @@ class SignUpPage extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 0,
                       blurRadius: 5,
-                      offset: Offset(0, 4), // Shadow only on the bottom
+                      offset: const Offset(0, 4), // Shadow only on the bottom
                     ),
                   ],
                 ),
@@ -91,14 +91,14 @@ class SignUpPage extends StatelessWidget {
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     border: InputBorder.none, // No border around
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), // Padding inside the field
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), // Padding inside the field
                     labelText: currentLocalization['Phone Number']??"",
                     hintText: currentLocalization['Enter your phone number']??"",
                   ),
                 ),
               ),
 
-              SizedBox(height: 20), // Space between the input field and the next element
+              const SizedBox(height: 20), // Space between the input field and the next element
 
               // Full-width sign-up button with color #0EA6BB
 
@@ -106,11 +106,11 @@ class SignUpPage extends StatelessWidget {
                 width: double.infinity, // Full width
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF0EA6BB), // Sign-up button color
+                    backgroundColor: const Color(0xFF0EA6BB), // Sign-up button color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20), // More curve for the button
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 14.0), // Slightly smaller height
+                    padding: const EdgeInsets.symmetric(vertical: 14.0), // Slightly smaller height
                   ),
                   onPressed: ()  async{
                     // Add +91 to the phone number before passing it to the function

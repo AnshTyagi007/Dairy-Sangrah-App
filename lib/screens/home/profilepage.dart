@@ -249,7 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               Expanded(
                                   child: Text(
-                                "${farmUser.phoneNo}",
+                                farmUser.phoneNo,
                                 style: const TextStyle(fontSize: 18),
                               )),
                             ],
@@ -366,7 +366,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     super.initState();
     _controllerName.text =  widget.farmUser.farmName;
     _controllerOwnerName.text =  widget.farmUser.ownerName;
-    _controllerPhone.text =  widget.farmUser.phoneNo.toString();
+    _controllerPhone.text =  widget.farmUser.phoneNo;
     _controllerAddress.text =  widget.farmUser.location;
 
   }
@@ -446,7 +446,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       ownerName: _controllerOwnerName.text,
                       farmName: _controllerName.text,
                       location: _controllerAddress.text,
-                      phoneNo: int.parse(_controllerPhone.text)
+                      phoneNo: _controllerPhone.text
                   );
                   updateUser(farmUser);
                   Navigator.pop(context);

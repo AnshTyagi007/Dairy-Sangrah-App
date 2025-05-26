@@ -30,7 +30,7 @@ class AuthService {
       String ownerName,
       String farmName,
       String location,
-      int phoneNo) async {
+      String phoneNo) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email,

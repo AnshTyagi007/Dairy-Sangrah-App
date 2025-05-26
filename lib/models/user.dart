@@ -10,7 +10,7 @@ class FarmUser {
   final String ownerName;
   final String farmName;
   final String location;
-  final int phoneNo;
+  final String phoneNo;
 
   FarmUser(
       {required this.ownerName,

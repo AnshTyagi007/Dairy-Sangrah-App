@@ -25,7 +25,7 @@ class _RegisterState extends State<Register> {
   String ownerName = '';
   String farmName = '';
   String location = '';
-  int phoneNo = 1234567;
+  String phoneNo= '';
 
   @override
   Widget build(BuildContext context) {
@@ -143,6 +143,11 @@ class _RegisterState extends State<Register> {
                                   hintText: 'Phone_no'),
                               keyboardType: TextInputType.number,
                               controller: _textController,
+                              onChanged: (val) => {
+                                setState(() {
+                                  phoneNo= val;
+                                })
+                              },
                             ),
                             const SizedBox(height: 20.0),
                             ElevatedButton(

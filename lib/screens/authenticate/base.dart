@@ -34,7 +34,7 @@ class _DairyMitraRegistrationPageState
     print(currentLocalization["Register a new farm"]);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           '',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -49,10 +49,10 @@ class _DairyMitraRegistrationPageState
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 20), // Spacing from the top
+            const SizedBox(height: 20), // Spacing from the top
 
             // "DairyMitra Registration" text
-            Text(
+            const Text(
               'DairyMitra Registration',
               style: TextStyle(
                 fontSize: 24,
@@ -61,10 +61,10 @@ class _DairyMitraRegistrationPageState
               textAlign: TextAlign.center,
             ),
 
-            SizedBox(height: 10), // Space between title and subtitle
+            const SizedBox(height: 10), // Space between title and subtitle
 
             // Subtitle text
-            Text(
+            const Text(
               'Get started with your farm management journey',
               style: TextStyle(
                 fontSize: 16,
@@ -73,7 +73,7 @@ class _DairyMitraRegistrationPageState
               textAlign: TextAlign.center,
             ),
 
-            SizedBox(height: 40), // Space before the buttons
+            const SizedBox(height: 40), // Space before the buttons
 
             // "Register a New Farm" button
             GestureDetector(
@@ -84,8 +84,8 @@ class _DairyMitraRegistrationPageState
               },
               child: Container(
                 width: double.infinity, // Full width
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                margin: EdgeInsets.only(bottom: 20), // Space between buttons
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                margin: const EdgeInsets.only(bottom: 20), // Space between buttons
                 decoration: BoxDecoration(
                   color: selectedOption == 'Register a New Farm'
                       ? Colors.grey.shade200
