@@ -163,6 +163,9 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 16,
+            ),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -216,10 +219,6 @@ class _HomePageState extends State<HomePage> {
         height: MediaQuery.of(context).size.height * 0.25, // Keep container size the same
         decoration: BoxDecoration(
           color: const Color.fromRGBO(4, 142, 161, 1.0),
-          border: Border.all(
-            color: Colors.indigo.shade300,
-            width: 3,
-          ),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(32),
             topRight: Radius.circular(16),
@@ -228,34 +227,32 @@ class _HomePageState extends State<HomePage> {
           ),
           boxShadow: [
             BoxShadow(
-              color: containerColor.withOpacity(0.5),
+              color: Color.fromRGBO(14, 14, 14, 13),
               spreadRadius: 4,
-              blurRadius: 4,
+              blurRadius: 10,
               offset: const Offset(0, 3),
             ),
           ],
         ),
         child: Stack(
           children: [
-            ClipPath(
-              clipper: ArcClipper(),
-              child: Container(
-                color: containerColor,
-                width: double.infinity,
-                height: double.infinity,
-                padding: const EdgeInsets.only(bottom: 40, right: 20),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: ClipRRect(
-                borderRadius: BorderRadius.zero, // No circular clip
-                child: Image.asset(
-                  imageUrl,
-                  width: MediaQuery.of(context).size.width * 0.45, // Increased image size
-                  height: MediaQuery.of(context).size.width * 0.38, // Increased image size
-                  fit: BoxFit.contain, // Ensures the image fits well without overflowing
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 6),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                      bottomRight: Radius.circular(32),
+                      topRight: Radius.circular(16),
+                      bottomLeft: Radius.circular(16),
+                      topLeft: Radius.circular(16),
+                  ),
+                  child: Image.asset(
+                    imageUrl,
+                    width: MediaQuery.of(context).size.width, // Increased image size
+                    height: MediaQuery.of(context).size.height * 0.154, // Increased image size
+                    fit: BoxFit.cover, // Ensures the image fits well without overflowing
+                  ),
                 ),
               ),
             ),
@@ -264,16 +261,14 @@ class _HomePageState extends State<HomePage> {
               left: 0,
               right: 0,
               child: Container(
-                margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                margin: const EdgeInsets.fromLTRB(6, 8, 6, 0),
                 padding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: const BorderRadius.only(
+                  borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
-                    topRight: Radius.circular(0),
-                    bottomLeft: Radius.circular(0),
-                    bottomRight: Radius.circular(30),
+                    bottomRight: Radius.circular(16),
                   ),
                 ),
                 child: Text(
@@ -293,21 +288,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-}
-
-class ArcClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.moveTo(size.width, size.height * 0.8);
-    path.lineTo(size.width * 0.8, size.height);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return false;
   }
 }
