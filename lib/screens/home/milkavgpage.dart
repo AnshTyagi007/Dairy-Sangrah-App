@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,10 @@ class _AvgMilkPageState extends State<AvgMilkPage> {
   @override
   void initState() {
     super.initState();
-    db = DatabaseForMilkByDate(uid);
+    if (kDebugMode) {
+      print('**************** MILK AVG PAGE *****************');
+
+    }db = DatabaseForMilkByDate(uid);
     setState(() {
       _fetchAllMilkByDate();
 
@@ -170,6 +174,7 @@ class _AvgMilkPageState extends State<AvgMilkPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'fab-milkavgpage',
         onPressed: () {
           Navigator.push(
             context,

@@ -84,6 +84,7 @@ class _AnimalList1State extends State<AnimalList1> with SingleTickerProviderStat
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'fab-animallist',
         onPressed: () {
           Navigator.push(
             context,

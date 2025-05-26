@@ -67,6 +67,7 @@ class _FeedState extends State<FeedPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'fab-feedpage',
         onPressed: () {
           if (selectedSection == 'Dry Fodder') {
             Navigator.push(

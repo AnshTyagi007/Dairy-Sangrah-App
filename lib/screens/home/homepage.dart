@@ -1,5 +1,6 @@
 import 'package:farm_expense_mangement_app/screens/feed/feedpage.dart';
 import 'package:farm_expense_mangement_app/screens/home/animallist.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../main.dart';
@@ -99,7 +100,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     languageCode = Provider.of<AppData>(context).persistentVariable;
-    print(languageCode);
+    if (kDebugMode) {
+      print(languageCode);
+    }
     if (languageCode == 'en') {
       currentLocalization = LocalizationEn.translations;
     } else if (languageCode == 'hi') {
@@ -120,7 +123,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
-            Text(
+            const Text(
               '𝒹𝒶𝒾𝓇𝓎 𝓈𝒶𝓃𝑔𝓇𝒶𝒽',
               style: TextStyle(
                 fontSize: 35, // Adjust the size as needed
@@ -217,9 +220,9 @@ class _HomePageState extends State<HomePage> {
       onTap: onTap,
       child: Container(
         height: MediaQuery.of(context).size.height * 0.25, // Keep container size the same
-        decoration: BoxDecoration(
-          color: const Color.fromRGBO(4, 142, 161, 1.0),
-          borderRadius: const BorderRadius.only(
+        decoration: const BoxDecoration(
+          color: Color.fromRGBO(4, 142, 161, 1.0),
+          borderRadius: BorderRadius.only(
             topLeft: Radius.circular(32),
             topRight: Radius.circular(16),
             bottomLeft: Radius.circular(16),
@@ -230,7 +233,7 @@ class _HomePageState extends State<HomePage> {
               color: Color.fromRGBO(14, 14, 14, 13),
               spreadRadius: 4,
               blurRadius: 10,
-              offset: const Offset(0, 3),
+              offset: Offset(0, 3),
             ),
           ],
         ),

@@ -125,6 +125,7 @@ class _WrapperHomePageState extends State<WrapperHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FloatingActionButton(
+                heroTag: 'fab-profile',
                 onPressed: () {
                   profile(context);
                 },
@@ -137,6 +138,7 @@ class _WrapperHomePageState extends State<WrapperHomePage> {
                 ),
               ),
               FloatingActionButton(
+                heroTag: 'fab-home',
                 onPressed: () {
                   home(context);
                 },
@@ -149,6 +151,7 @@ class _WrapperHomePageState extends State<WrapperHomePage> {
                 ),
               ),
               FloatingActionButton(
+                heroTag: 'fab-language',
                 onPressed: () {
                   LanguagePopup.showLanguageOptions(context);
                 },
@@ -161,6 +164,7 @@ class _WrapperHomePageState extends State<WrapperHomePage> {
                 ),
               ),
               FloatingActionButton(
+                heroTag: 'fab-notifications',
                 onPressed: () {
                   _updateIndex(3);
                 },
