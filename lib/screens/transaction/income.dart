@@ -160,7 +160,7 @@ class _AddIncomeState extends State<AddIncome> {
       appBar: AppBar(
         title: Text(
           '${currentLocalization['new_income']}',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(13, 166, 186, 1.0),
@@ -213,9 +213,9 @@ class _AddIncomeState extends State<AddIncome> {
                         controller: _amountTextController,
                         decoration:  InputDecoration(
                           labelText: '${currentLocalization['how_much_did_you_earn']}',
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                           filled: true,
-                          fillColor: Color.fromRGBO(240, 255, 255, 1),
+                          fillColor: const Color.fromRGBO(240, 255, 255, 1),
 
                         ),
                       ),
@@ -227,9 +227,9 @@ class _AddIncomeState extends State<AddIncome> {
                         value: _selectedCategory,
                         decoration:  InputDecoration(
                           labelText: '${currentLocalization['select_income_type']}',
-                          border: OutlineInputBorder(),
+                          border: const OutlineInputBorder(),
                           filled: true,
-                          fillColor: Color.fromRGBO(240, 255, 255, 1),
+                          fillColor: const Color.fromRGBO(240, 255, 255, 1),
 
                         ),
                         items: sourceOptions.map((String source) {
@@ -253,9 +253,9 @@ class _AddIncomeState extends State<AddIncome> {
                           controller: _categoryTextController,
                           decoration:  InputDecoration(
                             labelText: '${currentLocalization['enter_category']}',
-                            border: OutlineInputBorder(),
+                            border: const OutlineInputBorder(),
                             filled: true,
-                            fillColor: Color.fromRGBO(240, 255, 255, 1),
+                            fillColor: const Color.fromRGBO(240, 255, 255, 1),
 
                           )
                         )
@@ -294,7 +294,7 @@ class _AddIncomeState extends State<AddIncome> {
                         ),
                         child:  Text(
                           '${currentLocalization['submit']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
                           ),

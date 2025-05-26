@@ -94,7 +94,7 @@ class _TransactionPageState extends State<TransactionPage> {
         backgroundColor: const Color.fromRGBO(13, 152, 186, 1.0),
         title:  Text(
           currentLocalization['transactions']??"",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -183,7 +183,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       child:  Center(
                         child: Text(
                           currentLocalization['income']??"",
-                          style: TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                         ),
                       ),
                     ),
@@ -212,7 +212,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       child:  Center(
                         child: Text(
                           currentLocalization['expenses']??"",
-                          style: TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                         ),
                       ),
                     ),
@@ -469,7 +469,7 @@ class TotalTransactionPage extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(13, 152, 186, 1.0),
         title:  Text(
           currentLocalization['total_transactions']??'',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: Container(
@@ -491,7 +491,7 @@ class TotalTransactionPage extends StatelessWidget {
             const SizedBox(height: 7),
              Text(
               '${currentLocalization["income_per_category"]}',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             ...incomePerCategory.entries.map((entry) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
@@ -513,7 +513,7 @@ class TotalTransactionPage extends StatelessWidget {
             const SizedBox(height: 7),
              Text(
               '${currentLocalization["expense_per_category"]}',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             ...expensePerCategory.entries.map((entry) => Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),

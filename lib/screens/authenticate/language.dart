@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart'; // Import provider package for state management
-import '../home/localisations_en.dart';
-import '../home/localisations_hindi.dart';
-import '../home/localisations_punjabi.dart';
 import 'package:farm_expense_mangement_app/screens/authenticate/base.dart';
-import 'dart:async';
 import 'package:farm_expense_mangement_app/main.dart';
 
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -21,7 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Text(
+          icon: const Text(
             '<',
             style: TextStyle(
               fontSize: 24,
@@ -33,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
             Navigator.pop(context);
           },
         ),
-        title: Text(
+        title: const Text(
           'Sign Up',
           style: TextStyle(
             fontWeight: FontWeight.bold,
@@ -50,9 +48,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
 
-                    Text(
+                    const Text(
                       'Language',
                       style: TextStyle(
                         fontSize: 24,
@@ -60,13 +58,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
 
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
 
                     Center(
                       child: Image.asset('asset/lang.jpeg'),
                     ),
 
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
 
                     // Language Options
                     languageOption('ENGLISH', 'en', 'ENGLISH'),
@@ -84,19 +82,19 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF0EA6BB),
+                    backgroundColor: const Color(0xFF0EA6BB),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DairyMitraRegistrationPage()),
+                      MaterialPageRoute(builder: (context) => const DairyMitraRegistrationPage()),
                     );
                   },
-                  child: Text(
+                  child: const Text(
                     'NEXT',
                     style: TextStyle(
                       fontSize: 18,
@@ -123,8 +121,8 @@ class _SignUpPageState extends State<SignUpPage> {
       },
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-        margin: EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+        margin: const EdgeInsets.only(bottom: 8),
         decoration: BoxDecoration(
           color: selectedLanguage == language
               ? Colors.grey.shade200
@@ -136,35 +134,35 @@ class _SignUpPageState extends State<SignUpPage> {
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: Offset(0, 3),
+              offset: const Offset(0, 3),
             ),
           ],
         ),
         child: Row(
           children: [
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Text(
               displayName,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             if (selectedLanguage == language)
               Container(
-                padding: EdgeInsets.all(4),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
                   color: Color(0xFF0EA6BB),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.check,
                   size: 20,
                   color: Colors.white,
                 ),
               ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
           ],
         ),
       ),

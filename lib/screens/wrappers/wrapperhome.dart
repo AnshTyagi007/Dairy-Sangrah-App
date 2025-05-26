@@ -208,12 +208,12 @@ class AlertNotificationsPage extends StatelessWidget {
     ];
 
     // Helper to trim content to a fixed number of words
-    String _trimContent(String content, int wordCount) {
+    String trimContent(String content, int wordCount) {
       final words = content.split(" ");
       if (words.length <= wordCount) {
         return content;
       }
-      return words.take(wordCount).join(" ") + "...";
+      return "${words.take(wordCount).join(" ")}...";
     }
 
     return Scaffold(
@@ -253,8 +253,8 @@ class AlertNotificationsPage extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 leading: Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF0DA6BA), // Tealish Blue Circle
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF0DA6BA), // Tealish Blue Circle
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
@@ -274,7 +274,7 @@ class AlertNotificationsPage extends StatelessWidget {
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 6.0),
                   child: Text(
-                    _trimContent(notifications[index]['details']!, 5),
+                    trimContent(notifications[index]['details']!, 5),
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF757575), // Medium gray

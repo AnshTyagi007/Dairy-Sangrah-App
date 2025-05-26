@@ -6,6 +6,8 @@ import '../home/localisations_punjabi.dart';
 import 'package:provider/provider.dart';
 import 'package:farm_expense_mangement_app/main.dart';
 class DairyMitraRegistrationPage extends StatefulWidget {
+  const DairyMitraRegistrationPage({super.key});
+
   @override
   _DairyMitraRegistrationPageState createState() =>
       _DairyMitraRegistrationPageState();
@@ -97,35 +99,35 @@ class _DairyMitraRegistrationPageState
                       color: Colors.grey.withOpacity(0.3),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3), // Slight shadow
+                      offset: const Offset(0, 3), // Slight shadow
                     ),
                   ],
                 ),
                 child: Row(
                   children: [
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Text(
                       currentLocalization['Register a New Farm']??"",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     if (selectedOption == 'Register a New Farm')
                       Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
                           color: Color(0xFF0EA6BB), // Blue background
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.check,
                           size: 20,
                           color: Colors.white, // White checkmark
                         ),
                       ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                   ],
                 ),
               ),
@@ -140,7 +142,7 @@ class _DairyMitraRegistrationPageState
               },
               child: Container(
                 width: double.infinity, // Full width
-                padding: EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
                 decoration: BoxDecoration(
                   color: selectedOption == 'Join an Existing Farm'
                       ? Colors.grey.shade200
@@ -152,35 +154,35 @@ class _DairyMitraRegistrationPageState
                       color: Colors.grey.withOpacity(0.3),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3), // Slight shadow
+                      offset: const Offset(0, 3), // Slight shadow
                     ),
                   ],
                 ),
                 child: Row(
                   children: [
-                    SizedBox(width: 16),
-                    Text(
+                    const SizedBox(width: 16),
+                    const Text(
                       'Join an Existing Farm',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     if (selectedOption == 'Join an Existing Farm')
                       Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
                           color: Color(0xFF0EA6BB), // Blue background
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.check,
                           size: 20,
                           color: Colors.white, // White checkmark
                         ),
                       ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                   ],
                 ),
               ),
@@ -193,11 +195,11 @@ class _DairyMitraRegistrationPageState
                   width: double.infinity, // Full width
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF0EA6BB), // Confirm button color
+                      backgroundColor: const Color(0xFF0EA6BB), // Confirm button color
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12), // Curved edges
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                     onPressed: () {
                       // Handle confirm action
@@ -206,7 +208,7 @@ class _DairyMitraRegistrationPageState
                         MaterialPageRoute(builder: (context) => SignUpPage()),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'Confirm',
                       style: TextStyle(
                         fontSize: 18,

@@ -1,6 +1,5 @@
 import 'package:farm_expense_mangement_app/models/cattle.dart';
 import 'package:farm_expense_mangement_app/screens/home/animaldetails.dart';
-import 'package:farm_expense_mangement_app/screens/home/newcattle.dart';
 import 'package:farm_expense_mangement_app/services/database/cattledatabase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ class AnimalList2 extends StatefulWidget {
   final String animalType;
   final String section;
 
-  const AnimalList2({required this.animalType, required this.section, Key? key}) : super(key: key);
+  const AnimalList2({required this.animalType, required this.section, super.key});
 
   @override
   State<AnimalList2> createState() => _AnimalList2State();
@@ -121,8 +120,8 @@ class _AnimalList2State extends State<AnimalList2> {
             child: DropdownButton<String>(
               value: _selectedBreed,
               hint: Text(
-                '${_selectedBreed ?? 'All'}',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                _selectedBreed ?? 'All',
+                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
               onChanged: (String? newValue) {

@@ -110,7 +110,7 @@ class _AvgMilkPageState extends State<AvgMilkPage> {
         title:  Center(
           child: Text(
             currentLocalization['milk_records']??'',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         actions: [
@@ -273,7 +273,7 @@ class _AddMilkDataPageState extends State<AddMilkDataPage> {
       appBar: AppBar(
         title:  Text(
           currentLocalization['add_milk_data']??"",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color.fromRGBO(13, 166, 186, 1.0),
         leading: IconButton(
@@ -294,9 +294,9 @@ class _AddMilkDataPageState extends State<AddMilkDataPage> {
                 value: selectedRfid,
                 decoration:  InputDecoration(
                   labelText: currentLocalization['select_rfid']??"",
-                  border: OutlineInputBorder(),
+                  border: const OutlineInputBorder(),
                   filled: true,
-                  fillColor: Color.fromRGBO(240, 255, 255, 0.7),
+                  fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
                 ),
                 items: allRfid.map((String rfid) {
                   return DropdownMenuItem<String>(
@@ -367,7 +367,7 @@ class _AddMilkDataPageState extends State<AddMilkDataPage> {
                       ),
                       decoration:  InputDecoration(
                         labelText: currentLocalization['milking_date']??"",
-                        suffixIcon: Icon(Icons.calendar_today),
+                        suffixIcon: const Icon(Icons.calendar_today),
                         border: InputBorder.none,
                       ),
                     ),
@@ -400,10 +400,10 @@ class _AddMilkDataPageState extends State<AddMilkDataPage> {
                     }
                   },
                   child:  Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Text(
                         currentLocalization['add']??"",
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 15,
                             color: Colors.black,
                             fontWeight: FontWeight.bold)),

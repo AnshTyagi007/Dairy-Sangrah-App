@@ -127,7 +127,7 @@ class _AddNewCattleState extends State<AddNewCattle> {
       appBar: AppBar(
         title: Text(
           currentLocalization['new_cattle']??"",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: const Color.fromRGBO(13, 166, 186, 1.0),
@@ -153,9 +153,9 @@ class _AddNewCattleState extends State<AddNewCattle> {
                   controller: _rfidTextController,
                   decoration: InputDecoration(
                     labelText: '${currentLocalization['enter_the_rfid'] ?? ""}*',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Color.fromRGBO(240, 255, 255, 0.7),
+                    fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -201,9 +201,9 @@ class _AddNewCattleState extends State<AddNewCattle> {
                   value: _selectedGender,
                   decoration: InputDecoration(
                     labelText: '${currentLocalization['gender']??""}*',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Color.fromRGBO(240, 255, 255, 0.7),
+                    fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
                   ),
                   items: genderOptions.map((String gender) {
                     return DropdownMenuItem<String>(
@@ -232,10 +232,10 @@ class _AddNewCattleState extends State<AddNewCattle> {
                   // initialValue: '0',
                   controller: _agetextController,
                   decoration: InputDecoration(
-                    labelText: '${currentLocalization['enter_the_age']??""}',
-                    border: OutlineInputBorder(),
+                    labelText: currentLocalization['enter_the_age']??"",
+                    border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Color.fromRGBO(240, 255, 255, 0.7),
+                    fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
                   ),
                 ),
               ),
@@ -248,9 +248,9 @@ class _AddNewCattleState extends State<AddNewCattle> {
                   controller: _weightTextController,
                   decoration: InputDecoration(
                     labelText: '${currentLocalization['enter_the_weight']??""}*',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Color.fromRGBO(240, 255, 255, 0.7),
+                    fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
                   ),
                 ),
               ),
@@ -261,9 +261,9 @@ class _AddNewCattleState extends State<AddNewCattle> {
                     value: _selectedSource,
                     decoration: InputDecoration(
                       labelText: '${currentLocalization['source_of_cattle']??""}*',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                       filled: true,
-                      fillColor: Color.fromRGBO(240, 255, 255, 0.7),
+                      fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
                     ),
                     items: sourceOptions.map((String source) {
                       return DropdownMenuItem<String>(
@@ -290,9 +290,9 @@ class _AddNewCattleState extends State<AddNewCattle> {
                   controller: _breedTextController,
                   decoration: InputDecoration(
                     labelText: '${currentLocalization['enter_the_breed']??""}*',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Color.fromRGBO(240, 255, 255, 0.7),
+                    fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -308,10 +308,10 @@ class _AddNewCattleState extends State<AddNewCattle> {
                 child: DropdownButtonFormField<String>(
                   value: _selectedState,
                   decoration: InputDecoration(
-                    labelText: '${currentLocalization['status']??""}',
-                    border: OutlineInputBorder(),
+                    labelText: currentLocalization['status']??"",
+                    border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Color.fromRGBO(240, 255, 255, 0.7),
+                    fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
                   ),
                   items: stateOptions.map((String stage) {
                     return DropdownMenuItem<String>(
@@ -343,12 +343,12 @@ class _AddNewCattleState extends State<AddNewCattle> {
                       }
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
+                      backgroundColor: WidgetStateProperty.all(
                           const Color.fromRGBO(13, 166, 186, 1.0)),
                     ),
                     child: Text(
-                      '${currentLocalization['submit']??""}',
-                      style: TextStyle(
+                      currentLocalization['submit']??"",
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontSize: 16),

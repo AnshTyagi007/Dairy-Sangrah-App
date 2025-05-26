@@ -2,8 +2,6 @@ import 'package:farm_expense_mangement_app/models/user.dart' as my_app_user;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:farm_expense_mangement_app/Services/database/userdatabase.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:farm_expense_mangement_app/screens/authenticate/otp.dart';
 
 
 class AuthService {
@@ -87,6 +85,7 @@ print(verificationId);
         this.verificationId.value=verificationId;
     }
     );
+    return null;
 
   }
 
@@ -96,7 +95,7 @@ print(verificationId);
       // Use await to wait for the sign-in process to complete
       var credentials = await _auth.signInWithCredential(
         PhoneAuthProvider.credential(
-          verificationId: this.verificationId.value,
+          verificationId: verificationId.value,
           smsCode: otp,
         ),
       );

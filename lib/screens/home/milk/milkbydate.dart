@@ -87,7 +87,7 @@ class _MilkByDatePageState extends State<MilkByDatePage> {
         title:  Center(
           child: Text(
             currentLocalization['milk_records']??"",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
         actions: [

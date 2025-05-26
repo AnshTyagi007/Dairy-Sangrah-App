@@ -166,9 +166,9 @@ class _EditTransactionState extends State<EditTransaction> {
                 child: TextFormField(
                   readOnly: true,
                   enabled: false,
-                  style:  TextStyle(fontSize: 20, color: Colors.black),
+                  style:  const TextStyle(fontSize: 20, color: Colors.black),
                   // controller: _categoryTransaction,
-                    initialValue:(widget.showIncome) ? '${currentLocalization[widget?.sale?.name]}' : '${currentLocalization[widget?.expense?.name]}',
+                    initialValue:(widget.showIncome) ? '${currentLocalization[widget.sale?.name]}' : '${currentLocalization[widget.expense?.name]}',
                   decoration: InputDecoration(
                       labelText: (widget.showIncome) ? '${currentLocalization['income_category']}' : '${currentLocalization['expense_category']}',
                       labelStyle: const TextStyle(fontSize: 20, color: Colors.black)),
@@ -189,7 +189,7 @@ class _EditTransactionState extends State<EditTransaction> {
                   initialValue: '${_dateOfTransaction.year}-${_dateOfTransaction.month}-${_dateOfTransaction.day}',
                   decoration: InputDecoration(
                       labelText: '${currentLocalization['transaction_date']}',
-                      labelStyle: TextStyle(fontSize: 20, color: Colors.black)),
+                      labelStyle: const TextStyle(fontSize: 20, color: Colors.black)),
 
                 ),
               ),
@@ -268,12 +268,12 @@ class _EditTransactionState extends State<EditTransaction> {
                       _deleteTransaction(context);
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
+                      backgroundColor: WidgetStateProperty.all<Color>(
                           const Color.fromRGBO(13, 166, 186, 0.9)),
                     ),
                     child: Text(
                         currentLocalization['delete']??"",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -282,12 +282,12 @@ class _EditTransactionState extends State<EditTransaction> {
                       _submitForm(context);
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
+                      backgroundColor: WidgetStateProperty.all<Color>(
                           const Color.fromRGBO(13, 166, 186, 0.9)),
                     ),
                     child: Text(
                       currentLocalization['save']??"",
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   ),

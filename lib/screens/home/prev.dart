@@ -193,7 +193,7 @@ class _AnimalListState extends State<AnimalList> {
                   Text(
                     currentLocalization['filter_options']??'',
                     style:
-                    TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 16),
                   _buildFilterOption(
@@ -243,7 +243,7 @@ class _AnimalListState extends State<AnimalList> {
                         ),
                         child: Text(
                           currentLocalization['confirm_filters']??'',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -263,7 +263,7 @@ class _AnimalListState extends State<AnimalList> {
                         ),
                         child:  Text(
                           currentLocalization['clear_filters']??'',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                       ),

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:farm_expense_mangement_app/services/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:farm_expense_mangement_app/screens/authenticate/otp.dart';
 import '../home/localisations_en.dart';
 import '../home/localisations_hindi.dart';
@@ -15,6 +14,8 @@ class SignUpPage extends StatelessWidget {
   late Map<String, String> currentLocalization= {};
 
   late String languageCode = 'en';
+
+  SignUpPage({super.key});
 
 
   @override
@@ -114,10 +115,10 @@ class SignUpPage extends StatelessWidget {
                   ),
                   onPressed: ()  async{
                     // Add +91 to the phone number before passing it to the function
-                    String phoneNumber = "+91" + _phoneController.text.trim();
+                    String phoneNumber = "+91${_phoneController.text.trim()}";
                     Navigator.push(
                         context, MaterialPageRoute(
-                        builder: (context) =>  OtpVerificationPage()));
+                        builder: (context) =>  const OtpVerificationPage()));
                     // Handle sign-up logic here
                     await FirebaseAuth.instance.verifyPhoneNumber(phoneNumber:phoneNumber,timeout: const Duration(seconds: 60),verificationCompleted: (PhoneAuthCredential credential) { }, verificationFailed: (FirebaseAuthException e) {}, codeSent: (String verificationId, int? resendtoken){
                       SignUpPage.verify=verificationId;
@@ -128,7 +129,7 @@ class SignUpPage extends StatelessWidget {
                   },
                   child: Text(
                     currentLocalization['Sign Up']??"",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white, // Text color

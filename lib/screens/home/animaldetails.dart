@@ -183,7 +183,7 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                         children: [
                            Text(
                             currentLocalization['events']??"",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                           ElevatedButton(
@@ -198,10 +198,10 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                               },
                               style: ButtonStyle(
                                 backgroundColor:
-                                    MaterialStateProperty.all<Color>(
+                                    WidgetStateProperty.all<Color>(
                                   const Color.fromRGBO(240, 255, 255, 1.0),
                                 ),
-                                side: MaterialStateProperty.all<BorderSide>(
+                                side: WidgetStateProperty.all<BorderSide>(
                                   const BorderSide(
                                       color: Colors
                                           .black), // Set the border color here
@@ -209,7 +209,7 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                               ),
                               child:  Text(
                                 currentLocalization['add_event']??"",
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               )
@@ -311,10 +311,10 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                             },
                           ),
                            Padding(
-                            padding: EdgeInsets.fromLTRB(12.0, 8, 12, 2),
+                            padding: const EdgeInsets.fromLTRB(12.0, 8, 12, 2),
                             child: Text(
                               currentLocalization["details"]??"",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 24,
                                   color: Color.fromRGBO(13, 166, 186, 1.0),
                                   fontWeight: FontWeight.bold),
@@ -350,7 +350,7 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                                     width: 100,
                                     child: Text(
                                       currentLocalization["age"]??"",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white,
                                         fontSize: 20,
@@ -383,7 +383,7 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                                     width: 100,
                                     child: Text(
                                       currentLocalization["sex"]??"",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white,
                                         fontSize: 20,
@@ -416,7 +416,7 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                                     width: 100,
                                     child: Text(
                                       currentLocalization["weight"]??"",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white,
                                         fontSize: 20,
@@ -449,7 +449,7 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                                     width: 100,
                                     child: Text(
                                       currentLocalization["breed"]??"",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white,
                                         fontSize: 20,
@@ -482,7 +482,7 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                                     width: 100,
                                     child: Text(
                                       currentLocalization["state"]??"",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white,
                                         fontSize: 20,
@@ -515,7 +515,7 @@ class _AnimalDetailsState extends State<AnimalDetails> {
                                     width: 100,
                                     child: Text(
                                       currentLocalization["source_of_cattle"]??"",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.w600,
                                         color: Colors.white,
                                         fontSize: 20,
@@ -827,7 +827,7 @@ class _EditAnimalDetailState extends State<EditAnimalDetail> {
                       }
                     },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
+                      backgroundColor: WidgetStateProperty.all(
                         const Color.fromRGBO(13, 166, 186, 1.0),
                       ),
                     ),
@@ -998,7 +998,7 @@ class _AddEventPopupState extends State<AddEventPopup> {
               }
             },
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(
+              backgroundColor: WidgetStateProperty.all(
                 const Color.fromRGBO(13, 166, 186, 0.6),
               ),
             ),

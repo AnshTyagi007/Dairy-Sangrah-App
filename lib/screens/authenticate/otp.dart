@@ -4,10 +4,9 @@ import 'package:farm_expense_mangement_app/services/auth.dart';
 // import 'package:farm_expense_mangement_app/screens/home/homepage.dart';
 import 'package:farm_expense_mangement_app/screens/wrappers/wrapperhome.dart';
 import 'package:farm_expense_mangement_app/screens/authenticate/phoneno.dart';
-import '../home/localisations_en.dart';
-import '../home/localisations_hindi.dart';
-import '../home/localisations_punjabi.dart';
 class OtpVerificationPage extends StatefulWidget {
+  const OtpVerificationPage({super.key});
+
   @override
   _OtpVerificationPageState createState() => _OtpVerificationPageState();
 }
@@ -51,7 +50,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Text(
+          icon: const Text(
             '<', // Custom back button symbol
             style: TextStyle(
               fontSize: 24,
@@ -63,7 +62,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
             Navigator.pop(context); // Handle back navigation
           },
         ),
-        title: Text(
+        title: const Text(
           'Login To Dairy Mitra',
           style: TextStyle(
             fontWeight: FontWeight.bold, // Make the title bold
@@ -78,7 +77,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             // "Enter OTP" text (bold)
-            Text(
+            const Text(
               'Enter OTP',
               style: TextStyle(
                 fontSize: 20,
@@ -86,7 +85,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
               ),
             ),
 
-            SizedBox(height: 20), // Space between the text and OTP boxes
+            const SizedBox(height: 20), // Space between the text and OTP boxes
 
             // Centered Row for OTP input boxes
             Center(
@@ -107,18 +106,18 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
               ),
             ),
 
-            SizedBox(height: 20), // Space between the OTP boxes and the continue button
+            const SizedBox(height: 20), // Space between the OTP boxes and the continue button
 
             // Continue button (same style as sign-up button)
             SizedBox(
               width: double.infinity, // Full width
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF0EA6BB), // Continue button color
+                  backgroundColor: const Color(0xFF0EA6BB), // Continue button color
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10), // More curve for the button
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 14.0), // Slightly smaller height
+                  padding: const EdgeInsets.symmetric(vertical: 14.0), // Slightly smaller height
                 ),
                 onPressed: () async {
     String otp=_controllers.map((controller) => controller.text).join();
@@ -139,7 +138,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     }
 
                 },
-                child: Text(
+                child: const Text(
                   'Continue',
                   style: TextStyle(
                     fontSize: 16,
@@ -150,13 +149,13 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
               ),
             ),
 
-            SizedBox(height: 20), // Space between the continue button and the next section
+            const SizedBox(height: 20), // Space between the continue button and the next section
 
             // "Didn't receive code?" and "Resend OTP" button
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
+                const Text(
                   "Didn't receive code?",
                   style: TextStyle(
                     fontSize: 16,
@@ -167,7 +166,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                   onPressed: () {
                     // Handle resend OTP logic here
                   },
-                  child: Text(
+                  child: const Text(
                     'Resend OTP',
                     style: TextStyle(
                       fontSize: 16,
@@ -179,7 +178,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
               ],
             ),
 
-            SizedBox(height: 20), // Space between the resend OTP section and the terms text
+            const SizedBox(height: 20), // Space between the resend OTP section and the terms text
 
             // Terms and conditions text
             Center(
@@ -217,7 +216,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 0,
             blurRadius: 6,
-            offset: Offset(0, 4), // Shadow only on the bottom side
+            offset: const Offset(0, 4), // Shadow only on the bottom side
           ),
         ],
       ),
@@ -227,7 +226,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         maxLength: 1, // Restrict input to 1 character
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           border: InputBorder.none,
           counterText: '', // Hide the counter text
         ),
