@@ -164,6 +164,7 @@ class _AnimalListState extends State<AnimalList> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'fab-prev',
         onPressed: () {
           addCattle(context);
         },
