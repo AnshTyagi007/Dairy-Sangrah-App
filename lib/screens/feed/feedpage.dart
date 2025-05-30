@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -100,11 +101,22 @@ class _FeedState extends State<FeedPage> {
 
   // Method to display the content based on the selected section
   Widget displaySelectedSectionContent() {
-    final sectionType = selectedSection.replaceAll(' ', '').toLowerCase(); // Normalize section name
-    final collectionPath = 'feed/$sectionType/items';
+    final sectionType = selectedSection;
+    if (kDebugMode) {
+      print(sectionType);
+    }
+
+    // Path to Feed collection and the selected section type (Dry Fodder, Green Fodder, etc.)
+    final documentPath = 'User/$uid/Feed/$sectionType';
 
     return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection(collectionPath).snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('User')
+          .doc(uid)
+          .collection('Feed')
+          .doc(sectionType) // Reference the specific feed type (Dry Fodder, etc.)
+          .collection('Items') // Access the 'Items' sub-collection
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -112,6 +124,7 @@ class _FeedState extends State<FeedPage> {
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return const Center(child: Text('No items found.'));
         }
+
         final items = snapshot.data!.docs;
 
         return ListView.builder(
@@ -127,6 +140,7 @@ class _FeedState extends State<FeedPage> {
       },
     );
   }
+
 
   // Helper method to create a section button
   Widget sectionButton(String sectionName) {

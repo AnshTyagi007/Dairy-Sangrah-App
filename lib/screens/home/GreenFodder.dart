@@ -1,4 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/feed.dart';
+import '../../services/database/feeddatabase.dart';
+import '../../services/feed_deduction_service.dart';
 
 class GreenFodderPage extends StatefulWidget {
   const GreenFodderPage({super.key});
@@ -14,10 +20,28 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
   final TextEditingController _rateController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _brandController = TextEditingController();
+  final TextEditingController _weeklyConsumptionController = TextEditingController();
+
 
   String _selectedType = 'Maize';
   String _selectedSource = 'Purchased';
   bool _isCustomType = false;
+  final int _defaultWeeklyConsumption = 10;
+  late final FeedDeductionService _feedDeductionService;
+  late final DatabaseServicesForFeed _dbService;
+
+  @override
+  void initState() {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+
+    super.initState();
+    if (kDebugMode) {
+      print('GreenFodderPage initState called');
+    }
+    _dbService = DatabaseServicesForFeed(uid!);
+    _feedDeductionService = FeedDeductionService(uid);
+    _weeklyConsumptionController.text = _defaultWeeklyConsumption.toString(); // Set default consumption value
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +122,8 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
               const SizedBox(height: 20),
               _buildTextField(_brandController, 'Brand Name (if Purchased)'),
               const SizedBox(height: 40),
+              _buildTextField(_weeklyConsumptionController, 'Weekly Consumption', readOnly:false),
+              const SizedBox(height: 40),
 
               Center(
                 child: ElevatedButton(
@@ -124,9 +150,10 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label) {
+  Widget _buildTextField(TextEditingController controller, String label, {bool readOnly = false}) {
     return TextField(
       controller: controller,
+      readOnly: readOnly,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(color: Colors.black54),
@@ -173,15 +200,28 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
     );
   }
 
-  void _submitData() {
+  void _submitData() async{
     final type = _isCustomType ? _customTypeController.text : _selectedType;
-    final quantity = _quantityController.text;
+    final quantity = int.tryParse(_quantityController.text) ?? 0;
     final unit = _unitController.text;
     final source = _selectedSource;
     final rate = _rateController.text;
     final price = _priceController.text;
     final brand = _brandController.text;
+    final weeklyConsumption = int.tryParse(_weeklyConsumptionController.text) ?? _defaultWeeklyConsumption;
 
-    print('Type: $type, Quantity: $quantity $unit, Source: $source, Rate: $rate, Price: $price, Brand: $brand');
+    final newFeed = Feed(
+      itemName: type ?? '',
+      quantity: quantity,
+      Type:'Green Fodder',
+      requiredQuantity: weeklyConsumption,
+    );
+
+    await _dbService.infoToServerFeed(newFeed);
+    _feedDeductionService.scheduleWeeklyDeduction(newFeed);
+
+    if (kDebugMode) {
+      print('Type: $type, Quantity: $quantity $unit, Source: $source, Rate: $rate, Price: $price, Brand: $brand');
+    }
   }
 }

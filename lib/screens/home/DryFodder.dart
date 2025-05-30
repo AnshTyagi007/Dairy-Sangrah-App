@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../models/feed.dart';
 import '../../services/database/feeddatabase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../services/feed_deduction_service.dart';
 
 
 class DryFodderPage extends StatefulWidget {
@@ -25,8 +27,8 @@ class _DryFodderPageState extends State<DryFodderPage> {
   String? _selectedSource;
   final List<String> _fodderTypes = ['Wheat Straw', 'Paddy', 'Straw', 'Others'];
   final List<String> _sourceTypes = ['Purchased', 'Own Farm'];
+  late final FeedDeductionService _feedDeductionService;
   final int _defaultWeeklyConsumption = 10; // Default value for weekly consumption
-
   late final DatabaseServicesForFeed _dbService;
 
   @override
@@ -34,7 +36,11 @@ class _DryFodderPageState extends State<DryFodderPage> {
     final uid = FirebaseAuth.instance.currentUser?.uid;
 
     super.initState();
+    if (kDebugMode) {
+      print('DryFodderPage initState called');
+    }
     _dbService = DatabaseServicesForFeed(uid!);
+    _feedDeductionService = FeedDeductionService(uid);
     _weeklyConsumptionController.text = _defaultWeeklyConsumption.toString(); // Set default consumption value
   }
 
@@ -58,26 +64,10 @@ class _DryFodderPageState extends State<DryFodderPage> {
     await _dbService.infoToServerFeed(newFeed);
 
     // Schedule weekly deduction from total quantity
-    _scheduleWeeklyDeduction(newFeed);
+    _feedDeductionService.scheduleWeeklyDeduction(newFeed);
 
-    print('Data saved: Type: $type, Quantity: $quantity $unit, Rate: $rate, Price: $price, Brand: $brand, Source: $source, Weekly Consumption: $weeklyConsumption');
-  }
-
-  // Weekly deduction logic
-  Future<void> _scheduleWeeklyDeduction(Feed feed) async {
-    final docSnapshot = await _dbService.infoFromServer(feed.itemName);
-    if (docSnapshot.exists) {
-      final currentFeed = Feed.fromFireStore(docSnapshot);
-      final updatedQuantity = (currentFeed.quantity - (feed.requiredQuantity ?? _defaultWeeklyConsumption)).clamp(0, currentFeed.quantity);
-
-      await _dbService.infoToServerFeed(Feed(
-        itemName: currentFeed.itemName,
-        quantity: updatedQuantity,
-        Type: 'Dry Fodder',
-        requiredQuantity: currentFeed.requiredQuantity,
-      ));
-
-      print('Weekly consumption deducted. New quantity: $updatedQuantity');
+    if (kDebugMode) {
+      print('Data saved: Type: $type, Quantity: $quantity $unit, Rate: $rate, Price: $price, Brand: $brand, Source: $source, Weekly Consumption: $weeklyConsumption');
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import '../../models/feed.dart';
 
 class DatabaseServicesForFeed {
@@ -13,49 +14,61 @@ class DatabaseServicesForFeed {
         .collection('User')
         .doc(uid)
         .collection('Feed')
-        .doc(feed.Type)
-    .collection(feed.itemName)
-         .doc(feed.itemName)
-
+        .doc(feed.Type) // Feed type (e.g., Paddy, Wheat Straw)
+        .collection('Items') // Sub-collection "Items"
+        .doc(feed.itemName) // Document representing the item
         .set(feed.toFireStore(), SetOptions(merge: true));
-    print('Feed item added or updated: ${feed.itemName}');
+    if (kDebugMode) {
+      print('Feed item added or updated: ${feed.itemName}');
+    }
   }
 
   // Function to get a single feed item from Firestore
-  Future<DocumentSnapshot<Map<String, dynamic>>> infoFromServer(
-      String itemName) async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> infoFromServer(String type, String itemName) async {
     return await db
         .collection('User')
         .doc(uid)
         .collection('Feed')
-        .doc(itemName)
+        .doc(type) // Feed type (e.g., Paddy, Wheat Straw)
+        .collection('Items') // Sub-collection "Items"
+        .doc(itemName) // Specific feed item document
         .get();
   }
 
-  // Function to get all feed items for the user
-  Future<QuerySnapshot<Map<String, dynamic>>> infoFromServerAllFeed() async {
+  // Function to get all feed items for the user from the "Items" sub-collection
+  Future<QuerySnapshot<Map<String, dynamic>>> infoFromServerAllFeed(String type) async {
+    // Query all items across all feed types
     return await db
         .collection('User')
         .doc(uid)
         .collection('Feed')
-        .orderBy('itemName')
-        .get();
+        .doc(type)
+        .collection('Items')
+        .get(); // Query for all types (Paddy, Wheat Straw, etc.)
   }
 
   // Function to delete a feed item from Firestore
-  Future<void> deleteFeed(String itemName) async {
+  Future<void> deleteFeed(String type, String itemName) async {
     await db
         .collection('User')
         .doc(uid)
         .collection('Feed')
-        .doc(itemName)
+        .doc(type) // Feed type
+        .collection('Items') // Sub-collection "Items"
+        .doc(itemName) // Specific feed item document
         .delete();
     print('Feed item deleted: $itemName');
   }
 
   // Function to reduce weekly quantity of a specific feed item
-  Future<void> reduceWeeklyQuantity(String itemName) async {
-    final feedRef = db.collection('User').doc(uid).collection('Feed').doc(itemName);
+  Future<void> reduceWeeklyQuantity(String type, String itemName) async {
+    final feedRef = db
+        .collection('User')
+        .doc(uid)
+        .collection('Feed')
+        .doc(type) // Feed type
+        .collection('Items') // Sub-collection "Items"
+        .doc(itemName); // Specific feed item document
 
     final doc = await feedRef.get();
     if (doc.exists) {
@@ -69,23 +82,38 @@ class DatabaseServicesForFeed {
           'quantity': newQuantity,
         });
 
-        print('Weekly quantity deducted for $itemName. New quantity: $newQuantity');
+        if (kDebugMode) {
+          print('Weekly quantity deducted for $itemName. New quantity: $newQuantity');
+        }
       } else {
-        print('Insufficient quantity for weekly deduction or no required quantity set.');
+        if (kDebugMode) {
+          print('Insufficient quantity for weekly deduction or no required quantity set.');
+        }
       }
     } else {
-      print('Feed item not found for weekly deduction.');
+      if (kDebugMode) {
+        print('Feed item not found for weekly deduction.');
+      }
     }
   }
 
   // Function to start the weekly deduction for all feed items
   Future<void> startWeeklyDeductionForAllFeeds() async {
-    final querySnapshot = await infoFromServerAllFeed();
+    final querySnapshot = await db
+        .collection('User')
+        .doc(uid)
+        .collection('Feed')
+        .get(); // Get all feed types (Paddy, Wheat Straw, etc.)
 
-    // Iterate through all feed items and apply the weekly deduction
-    for (var doc in querySnapshot.docs) {
-      final itemName = doc.get('itemName');
-      await reduceWeeklyQuantity(itemName);
+    // Iterate through all feed types
+    for (var feedDoc in querySnapshot.docs) {
+      final feedType = feedDoc.id; // Feed type (Paddy, Wheat Straw, etc.)
+
+      final itemQuerySnapshot = await feedDoc.reference.collection('Items').get(); // Get all items for this feed type
+      for (var doc in itemQuerySnapshot.docs) {
+        final itemName = doc.get('itemName');
+        await reduceWeeklyQuantity(feedType, itemName); // Apply weekly deduction
+      }
     }
   }
 }

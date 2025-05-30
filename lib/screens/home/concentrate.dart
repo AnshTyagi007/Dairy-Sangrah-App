@@ -1,4 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/feed.dart';
+import '../../services/database/feeddatabase.dart';
+import '../../services/feed_deduction_service.dart';
 
 class ConcentratePage extends StatefulWidget {
   const ConcentratePage({super.key});
@@ -16,10 +22,15 @@ class _ConcentratePageState extends State<ConcentratePage> {
   final TextEditingController _brandController = TextEditingController();
   final TextEditingController _customHomemadeController = TextEditingController();
   final TextEditingController _customPurchasedController = TextEditingController();
+  final TextEditingController _weeklyConsumptionController = TextEditingController();
+
 
   String _selectedType = 'Homemade'; // Default value
   String _selectedHomemadeType = 'Mustard'; // Default value for homemade types
   String _selectedPurchasedType = 'Brand Name'; // Default value for purchased types
+  late final FeedDeductionService _feedDeductionService;
+  final int _defaultWeeklyConsumption = 10; // Default value for weekly consumption
+  late final DatabaseServicesForFeed _dbService;
 
   // List of dropdown items
   final List<String> _homemadeTypes = [
@@ -43,6 +54,19 @@ class _ConcentratePageState extends State<ConcentratePage> {
     'Brand Name',
     'Type'
   ];
+
+  @override
+  void initState() {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+
+    super.initState();
+    if (kDebugMode) {
+      print('Concentrate initState called');
+    }
+    _dbService = DatabaseServicesForFeed(uid!);
+    _feedDeductionService = FeedDeductionService(uid);
+    _weeklyConsumptionController.text = _defaultWeeklyConsumption.toString(); // Set default consumption value
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,6 +168,8 @@ class _ConcentratePageState extends State<ConcentratePage> {
               const SizedBox(height: 20),
               _buildTextField(_brandController, 'Brand Name (if Purchased)'),
               const SizedBox(height: 40),
+              _buildTextField(_weeklyConsumptionController, 'Weekly Consumption', readOnly:false),
+              const SizedBox(height: 40),
               Center(
                 child: ElevatedButton(
                   onPressed: () {
@@ -189,9 +215,10 @@ class _ConcentratePageState extends State<ConcentratePage> {
   }
 
   // Helper method to create input fields with smaller size
-  Widget _buildTextField(TextEditingController controller, String label) {
+  Widget _buildTextField(TextEditingController controller, String label, {bool readOnly = false}) {
     return TextField(
       controller: controller,
+      readOnly: readOnly,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(color: Colors.black54),
@@ -220,27 +247,56 @@ class _ConcentratePageState extends State<ConcentratePage> {
   }
 
   // Method to handle form submission
-  void _submitData() {
-    final quantity = _quantityController.text;
+  Future<void> _submitData() async {
+    final type = _selectedHomemadeType == 'Others' ? _customHomemadeController.text : _selectedHomemadeType;
+    final quantity = int.tryParse(_quantityController.text) ?? 0;
     final unit = _unitController.text;
     final rate = _rateController.text;
     final price = _priceController.text;
     final brand = _brandController.text;
     final customHomemade = _customHomemadeController.text;
     final customPurchased = _customPurchasedController.text;
+    final weeklyConsumption = int.tryParse(_weeklyConsumptionController.text) ?? _defaultWeeklyConsumption;
 
-    print('Type: $_selectedType');
+
+    if (kDebugMode) {
+      print('Type: $_selectedType');
+    }
     if (_selectedType == 'Homemade') {
-      print('Homemade Type: $_selectedHomemadeType');
+      if (kDebugMode) {
+        print('Homemade Type: $_selectedHomemadeType');
+      }
       if (_selectedHomemadeType == 'Others') {
-        print('Custom Homemade Type: $customHomemade');
+        if (kDebugMode) {
+          print('Custom Homemade Type: $customHomemade');
+        }
       }
     } else if (_selectedType == 'Purchased') {
-      print('Purchased Type: $_selectedPurchasedType');
+      if (kDebugMode) {
+        print('Purchased Type: $_selectedPurchasedType');
+      }
       if (_selectedPurchasedType == 'Type') {
-        print('Custom Purchased Type: $customPurchased');
+        if (kDebugMode) {
+          print('Custom Purchased Type: $customPurchased');
+        }
       }
     }
-    print('Quantity: $quantity $unit, Rate: $rate, Price: $price, Brand: $brand');
+
+    final newFeed = Feed(
+      itemName: type ?? '',
+      quantity: quantity,
+      Type:'Concentrate',
+      requiredQuantity: weeklyConsumption,
+    );
+
+
+    await _dbService.infoToServerFeed(newFeed);
+
+    // Schedule weekly deduction from total quantity
+    _feedDeductionService.scheduleWeeklyDeduction(newFeed);
+
+    if (kDebugMode) {
+      print('Quantity: $quantity $unit, Rate: $rate, Price: $price, Brand: $brand');
+    }
   }
 }
