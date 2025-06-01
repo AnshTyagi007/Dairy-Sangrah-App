@@ -308,7 +308,7 @@ class _AddNewCattleState extends State<AddNewCattle> {
                 child: DropdownButtonFormField<String>(
                   value: _selectedState,
                   decoration: InputDecoration(
-                    labelText: currentLocalization['status']??"",
+                    labelText: currentLocalization['status'] ?? 'status',
                     border: const OutlineInputBorder(),
                     filled: true,
                     fillColor: const Color.fromRGBO(240, 255, 255, 0.7),
@@ -316,7 +316,7 @@ class _AddNewCattleState extends State<AddNewCattle> {
                   items: stateOptions.map((String stage) {
                     return DropdownMenuItem<String>(
                       value: stage,
-                      child: Text(currentLocalization[stage.toLowerCase()]??""),
+                      child: Text(currentLocalization[stage] ?? stage),
                     );
                   }).toList(),
                   onChanged: (value) {

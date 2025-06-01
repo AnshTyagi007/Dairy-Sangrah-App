@@ -43,9 +43,9 @@ class _FeedState extends State<FeedPage> {
       backgroundColor: const Color.fromRGBO(240, 255, 255, 1),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text(
-          'Inventory',
-          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black),
+        title: Text(
+          currentLocalization['Inventory'] ?? 'Inventory',
+          style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black),
           textAlign: TextAlign.center,
         ),
         backgroundColor: const Color.fromRGBO(4, 142, 161, 1.0), // AppBar color
@@ -132,8 +132,8 @@ class _FeedState extends State<FeedPage> {
           itemBuilder: (context, index) {
             final item = items[index].data() as Map<String, dynamic>;
             return ListTile(
-              title: Text(item['itemName'] ?? 'Unknown Item'),
-              subtitle: Text('Quantity: ${item['quantity'] ?? 0}'),
+              title: Text(currentLocalization[item['itemName']] ?? item['itemName']),
+              subtitle: Text('${currentLocalization['Quantity'] ?? 'Quantity'}: ${item['quantity'] ?? 0}'),
             );
           },
         );
@@ -166,7 +166,7 @@ class _FeedState extends State<FeedPage> {
         ),
         child: Center(
           child: Text(
-            sectionName,
+            currentLocalization[sectionName] ?? sectionName,
             style: TextStyle(
               fontSize: 16,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,

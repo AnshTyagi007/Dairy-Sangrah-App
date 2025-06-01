@@ -1,10 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../main.dart';
 import '../../models/feed.dart';
 import '../../services/database/feeddatabase.dart';
 import '../../services/feed_deduction_service.dart';
+import 'localisations_en.dart';
+import 'localisations_hindi.dart';
+import 'localisations_punjabi.dart';
 
 class ConcentratePage extends StatefulWidget {
   const ConcentratePage({super.key});
@@ -31,6 +36,8 @@ class _ConcentratePageState extends State<ConcentratePage> {
   late final FeedDeductionService _feedDeductionService;
   final int _defaultWeeklyConsumption = 10; // Default value for weekly consumption
   late final DatabaseServicesForFeed _dbService;
+  late Map<String, String> currentLocalization = {};
+  late String languageCode = 'en';
 
   // List of dropdown items
   final List<String> _homemadeTypes = [
@@ -70,6 +77,16 @@ class _ConcentratePageState extends State<ConcentratePage> {
 
   @override
   Widget build(BuildContext context) {
+    languageCode = Provider.of<AppData>(context).persistentVariable;
+
+    if (languageCode == 'en') {
+      currentLocalization = LocalizationEn.translations;
+    } else if (languageCode == 'hi') {
+      currentLocalization = LocalizationHi.translations;
+    } else if (languageCode == 'pa') {
+      currentLocalization = LocalizationPun.translations;
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -78,9 +95,9 @@ class _ConcentratePageState extends State<ConcentratePage> {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          'Concentrate',
-          style: TextStyle(
+        title: Text(
+          currentLocalization['Concentrate'] ?? 'Concentrate',
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -174,6 +191,7 @@ class _ConcentratePageState extends State<ConcentratePage> {
                 child: ElevatedButton(
                   onPressed: () {
                     _submitData();
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(4, 142, 161, 1.0),
@@ -207,7 +225,7 @@ class _ConcentratePageState extends State<ConcentratePage> {
       items: items.map((String item) {
         return DropdownMenuItem<String>(
           value: item,
-          child: Text(item),
+          child: Text(currentLocalization[item] ?? item),
         );
       }).toList(),
       isExpanded: true,
@@ -220,7 +238,7 @@ class _ConcentratePageState extends State<ConcentratePage> {
       controller: controller,
       readOnly: readOnly,
       decoration: InputDecoration(
-        labelText: label,
+        labelText: currentLocalization[label] ?? label,
         labelStyle: const TextStyle(color: Colors.black54),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),

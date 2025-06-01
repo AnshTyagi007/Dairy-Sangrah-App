@@ -1,9 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../main.dart';
 import '../../models/feed.dart';
 import '../../services/database/feeddatabase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../services/feed_deduction_service.dart';
+import 'localisations_en.dart';
+import 'localisations_hindi.dart';
+import 'localisations_punjabi.dart';
 
 
 class DryFodderPage extends StatefulWidget {
@@ -27,6 +32,8 @@ class _DryFodderPageState extends State<DryFodderPage> {
   String? _selectedSource;
   final List<String> _fodderTypes = ['Wheat Straw', 'Paddy', 'Straw', 'Others'];
   final List<String> _sourceTypes = ['Purchased', 'Own Farm'];
+  late Map<String, String> currentLocalization = {};
+  late String languageCode = 'en';
   late final FeedDeductionService _feedDeductionService;
   final int _defaultWeeklyConsumption = 10; // Default value for weekly consumption
   late final DatabaseServicesForFeed _dbService;
@@ -73,6 +80,16 @@ class _DryFodderPageState extends State<DryFodderPage> {
 
   @override
   Widget build(BuildContext context) {
+    languageCode = Provider.of<AppData>(context).persistentVariable;
+
+    if (languageCode == 'en') {
+      currentLocalization = LocalizationEn.translations;
+    } else if (languageCode == 'hi') {
+      currentLocalization = LocalizationHi.translations;
+    } else if (languageCode == 'pa') {
+      currentLocalization = LocalizationPun.translations;
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -81,9 +98,9 @@ class _DryFodderPageState extends State<DryFodderPage> {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          'Dry Fodder',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          currentLocalization['Dry Fodder'] ?? 'Dry Fodder',
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color.fromRGBO(4, 142, 161, 1.0),
       ),
@@ -116,11 +133,11 @@ class _DryFodderPageState extends State<DryFodderPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              _buildTextField(_rateController, 'Rate per Unit(if Purchased)'),
+              _buildTextField(_rateController, 'Rate per Unit (if Purchased)'),
               const SizedBox(height: 20),
-              _buildTextField(_priceController, 'Price(if Purchased)'),
+              _buildTextField(_priceController, 'Price (if Purchased)'),
               const SizedBox(height: 20),
-              _buildTextField(_brandController, 'Brand Name(if Purchased)'),
+              _buildTextField(_brandController, 'Brand Name (if Purchased)'),
               const SizedBox(height: 20),
               _buildTextField(_weeklyConsumptionController, 'Weekly Consumption', readOnly: false),
               const SizedBox(height: 40),
@@ -156,7 +173,7 @@ class _DryFodderPageState extends State<DryFodderPage> {
       controller: controller,
       readOnly: readOnly,
       decoration: InputDecoration(
-        labelText: label,
+        labelText: currentLocalization[label] ?? label,
         labelStyle: const TextStyle(color: Colors.black54),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -181,7 +198,7 @@ class _DryFodderPageState extends State<DryFodderPage> {
     return DropdownButtonFormField<String>(
       value: _selectedType,
       decoration: InputDecoration(
-        labelText: 'Type',
+        labelText: currentLocalization['Type'] ?? 'Type',
         labelStyle: const TextStyle(color: Colors.black54, fontSize: 14.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -191,7 +208,7 @@ class _DryFodderPageState extends State<DryFodderPage> {
       items: _fodderTypes.map((type) {
         return DropdownMenuItem(
           value: type,
-          child: Text(type),
+          child: Text(currentLocalization[type] ?? type),
         );
       }).toList(),
       onChanged: (value) {
@@ -207,7 +224,7 @@ class _DryFodderPageState extends State<DryFodderPage> {
     return DropdownButtonFormField<String>(
       value: _selectedSource,
       decoration: InputDecoration(
-        labelText: 'Source',
+        labelText: currentLocalization['Source'] ?? 'Source',
         labelStyle: const TextStyle(color: Colors.black54, fontSize: 14.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -217,7 +234,7 @@ class _DryFodderPageState extends State<DryFodderPage> {
       items: _sourceTypes.map((source) {
         return DropdownMenuItem(
           value: source,
-          child: Text(source),
+          child: Text(currentLocalization[source] ?? source),
         );
       }).toList(),
       onChanged: (value) {

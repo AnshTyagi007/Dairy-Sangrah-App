@@ -4,14 +4,14 @@
   ],
   "cleanCommandsComponents": [
     [
-      "C:\\Users\\Ansh\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "C:\\Users\\Ansh\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
       "-C",
       "C:\\Users\\Ansh\\Documents\\programming\\Flutter\\farm_expense_mangement_app\\android\\app\\.cxx\\RelWithDebInfo\\4d46t1s6\\armeabi-v7a",
       "clean"
     ]
   ],
   "buildTargetsCommandComponents": [
-    "C:\\Users\\Ansh\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "C:\\Users\\Ansh\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
     "-C",
     "C:\\Users\\Ansh\\Documents\\programming\\Flutter\\farm_expense_mangement_app\\android\\app\\.cxx\\RelWithDebInfo\\4d46t1s6\\armeabi-v7a",
     "{LIST_OF_TARGETS_TO_BUILD}"

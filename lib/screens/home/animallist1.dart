@@ -2,7 +2,13 @@ import 'package:farm_expense_mangement_app/models/cattle.dart';
 import 'package:farm_expense_mangement_app/screens/home/animaldetails.dart';
 import 'package:farm_expense_mangement_app/services/database/cattledatabase.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../main.dart';
+import 'localisations_en.dart';
+import 'localisations_hindi.dart';
+import 'localisations_punjabi.dart';
 
 class AnimalList2 extends StatefulWidget {
   final String animalType;
@@ -20,6 +26,8 @@ class _AnimalList2State extends State<AnimalList2> {
   List<Cattle> filteredCattle = [];
   final TextEditingController _searchController = TextEditingController();
   String? _selectedBreed; // Store the selected breed for filtering
+  late Map<String, String> currentLocalization = {};
+  late String languageCode = 'en';
 
   @override
   void initState() {
@@ -33,7 +41,9 @@ class _AnimalList2State extends State<AnimalList2> {
     final snapshot = await cattleDb.infoFromServerAllCattle(FirebaseAuth.instance.currentUser!.uid);
     setState(() {
       allCattle = snapshot.docs.map((doc) => Cattle.fromFireStore(doc, null)).toList();
-      print(widget.animalType);
+        if (kDebugMode) {
+        print(widget.animalType);
+      }
       // print(widget.section);
       _filterCattle();
     });
@@ -42,8 +52,12 @@ class _AnimalList2State extends State<AnimalList2> {
   void _filterCattle() {
     setState(() {
       filteredCattle = allCattle.where((cattle) {
-        print(cattle.type);
-        print(cattle.state);
+        if (kDebugMode) {
+          print(cattle.type);
+        }
+        if (kDebugMode) {
+          print(cattle.state);
+        }
         if (widget.animalType == 'Cow' && cattle.type != 'Cow') return false;
         if (widget.animalType == 'Buffalo' && cattle.type != 'Buffalo') return false;
         if (cattle.state != widget.section) return false;
@@ -52,7 +66,9 @@ class _AnimalList2State extends State<AnimalList2> {
       }).toList();
       _searchCattle(); // Apply search filter after breed filter
     });
-    print(filteredCattle);
+    if (kDebugMode) {
+      print(filteredCattle);
+    }
   }
 
   void _viewCattleDetail(Cattle cattle) {
@@ -95,12 +111,22 @@ class _AnimalList2State extends State<AnimalList2> {
 
   @override
   Widget build(BuildContext context) {
+    languageCode = Provider.of<AppData>(context).persistentVariable;
+
+    if (languageCode == 'en') {
+      currentLocalization = LocalizationEn.translations;
+    } else if (languageCode == 'hi') {
+      currentLocalization = LocalizationHi.translations;
+    } else if (languageCode == 'pa') {
+      currentLocalization = LocalizationPun.translations;
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
         title: Text(
-          '${widget.animalType} - ${widget.section}',
+          '${currentLocalization[widget.animalType] ?? widget.animalType} - ${currentLocalization[widget.section] ?? widget.section}',
           style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black,fontSize: 20),
           textAlign: TextAlign.center,
         ),
@@ -120,7 +146,7 @@ class _AnimalList2State extends State<AnimalList2> {
             child: DropdownButton<String>(
               value: _selectedBreed,
               hint: Text(
-                _selectedBreed ?? 'All',
+                currentLocalization[_selectedBreed] ?? _selectedBreed ?? 'All',
                 style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),
               icon: const Icon(Icons.arrow_drop_down, color: Colors.black),

@@ -1,10 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../main.dart';
 import '../../models/feed.dart';
 import '../../services/database/feeddatabase.dart';
 import '../../services/feed_deduction_service.dart';
+import 'localisations_en.dart';
+import 'localisations_hindi.dart';
+import 'localisations_punjabi.dart';
 
 class GreenFodderPage extends StatefulWidget {
   const GreenFodderPage({super.key});
@@ -26,6 +31,8 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
   String _selectedType = 'Maize';
   String _selectedSource = 'Purchased';
   bool _isCustomType = false;
+  late Map<String, String> currentLocalization = {};
+  late String languageCode = 'en';
   final int _defaultWeeklyConsumption = 10;
   late final FeedDeductionService _feedDeductionService;
   late final DatabaseServicesForFeed _dbService;
@@ -45,6 +52,16 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
 
   @override
   Widget build(BuildContext context) {
+    languageCode = Provider.of<AppData>(context).persistentVariable;
+
+    if (languageCode == 'en') {
+      currentLocalization = LocalizationEn.translations;
+    } else if (languageCode == 'hi') {
+      currentLocalization = LocalizationHi.translations;
+    } else if (languageCode == 'pa') {
+      currentLocalization = LocalizationPun.translations;
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -53,9 +70,9 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          'Green Fodder',
-          style: TextStyle(
+        title: Text(
+          currentLocalization['Green Fodder'] ?? 'Green Fodder',
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -105,7 +122,7 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
               const SizedBox(height: 20),
 
               _buildDropdown(
-                label: 'Source',
+                label: currentLocalization['Source'] ?? 'Source',
                 value: _selectedSource,
                 items: ['Purchased', 'Own Farm'],
                 onChanged: (newValue) {
@@ -129,6 +146,7 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     _submitData();
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromRGBO(4, 142, 161, 1.0),
@@ -155,7 +173,7 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
       controller: controller,
       readOnly: readOnly,
       decoration: InputDecoration(
-        labelText: label,
+        labelText: currentLocalization[label] ?? label,
         labelStyle: const TextStyle(color: Colors.black54),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -183,7 +201,7 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
     return DropdownButtonFormField<String>(
       value: value,
       decoration: InputDecoration(
-        labelText: label,
+        labelText: currentLocalization[label] ?? label,
         labelStyle: const TextStyle(color: Colors.black54, fontSize: 14.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -193,7 +211,7 @@ class _GreenFodderPageState extends State<GreenFodderPage> {
       items: items.map((String item) {
         return DropdownMenuItem<String>(
           value: item,
-          child: Text(item),
+          child: Text(currentLocalization[item] ?? item),
         );
       }).toList(),
       onChanged: onChanged,
