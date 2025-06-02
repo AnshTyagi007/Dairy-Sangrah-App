@@ -131,9 +131,30 @@ class _FeedState extends State<FeedPage> {
           itemCount: items.length,
           itemBuilder: (context, index) {
             final item = items[index].data() as Map<String, dynamic>;
-            return ListTile(
-              title: Text(currentLocalization[item['itemName']] ?? item['itemName']),
-              subtitle: Text('${currentLocalization['Quantity'] ?? 'Quantity'}: ${item['quantity'] ?? 0}'),
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                  side: const BorderSide(
+                    width: 1.5,
+                    color: Color.fromRGBO(4, 142, 161, 1.0)
+                  )
+                ),
+                title: Text(currentLocalization[item['itemName']] ?? item['itemName']),
+                subtitle: Text('${currentLocalization['Quantity'] ?? 'Quantity'}: ${item['quantity'] ?? 0}'),
+                trailing: SizedBox(
+                  width: MediaQuery.of(context).size.width* 0.09,
+                  child: IconButton(
+                      onPressed: () => deleteFeedItem(items[index].id),
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.redAccent,
+                        size: 30,
+                      )
+                  ),
+                )
+              ),
             );
           },
         );
@@ -176,5 +197,59 @@ class _FeedState extends State<FeedPage> {
         ),
       ),
     );
+  }
+
+  Future<void> deleteFeedItem(String itemId) async {
+    try {
+      // Show confirmation dialog
+      bool confirmDelete = await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(currentLocalization['Delete Item'] ?? 'Delete Item'),
+          content: Text(currentLocalization['Are you sure you want to delete this item?'] ??
+              'Are you sure you want to delete this item?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: Text(currentLocalization['Cancel'] ?? 'Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: Text(currentLocalization['Delete'] ?? 'Delete',
+                  style: const TextStyle(color: Colors.red)),
+            ),
+          ],
+        ),
+      );
+
+      if (confirmDelete == true) {
+        await FirebaseFirestore.instance
+            .collection('User')
+            .doc(uid)
+            .collection('Feed')
+            .doc(selectedSection)
+            .collection('Items')
+            .doc(itemId)
+            .delete();
+
+        // Show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(currentLocalization['Item deleted successfully'] ??
+                'Item deleted successfully'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      // Show error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(currentLocalization['Failed to delete item'] ??
+              'Failed to delete item: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 }

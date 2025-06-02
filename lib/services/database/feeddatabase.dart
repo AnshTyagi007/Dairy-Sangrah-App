@@ -57,7 +57,9 @@ class DatabaseServicesForFeed {
         .collection('Items') // Sub-collection "Items"
         .doc(itemName) // Specific feed item document
         .delete();
-    print('Feed item deleted: $itemName');
+    if (kDebugMode) {
+      print('Feed item deleted: $itemName');
+    }
   }
 
   // Function to reduce weekly quantity of a specific feed item
